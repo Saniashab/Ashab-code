@@ -1,0 +1,254 @@
+<!DOCTYPE html> 
+ <html lang="en"> 
+ <head> 
+     <meta charset="UTF-8"> 
+     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+     <style>
+     body{ 
+     padding: 0; 
+     margin: 0; 
+     box-sizing: 0; 
+     display: grid; 
+     justify-content: center; 
+     background: #e7e9e9; 
+     box-sizing: border-box; 
+ } 
+  
+ #container { 
+     margin-top: 30px; 
+     height: fit-content; 
+     display: flex; 
+     flex-direction: column; 
+     gap: 15px; 
+     align-items: center; 
+     width: 350px; 
+ } 
+  
+ #screen_text_node { 
+     width: 100%; 
+     height: 50%; 
+     overflow-x:scroll 
+ } 
+  
+ .grid{ 
+     position: relative; 
+     justify-content: center; 
+     display: grid; 
+     grid-template-columns: repeat(4, 1fr); 
+     grid-template-rows: repeat(6, 1fr); 
+     width: 80%; 
+     height: 470px; 
+     padding: 20px; 
+     border-radius: 40px; 
+     box-shadow: 3px 3px 4px #bcbcbc, 
+     -3px -3px 4px #fff; 
+ } 
+  
+ .grid .buttons, .grid .button { 
+         position: relative; 
+         border-radius: 15px; 
+         text-align: center; 
+         margin: 8px; 
+         box-shadow: 3px 3px 6px #bcbcbc, 
+                     -3px -3px 8px #fff; 
+         padding: 12px; 
+         text-decoration: none; 
+         width: 35px; 
+         height: 20px; 
+         cursor:pointer
+ } 
+  
+ .screen{ 
+     margin: 8px; 
+     position: relative; 
+     padding: 12px; 
+     overflow: hidden; 
+     border-radius: 15px; 
+     grid-column: 1/5; 
+     text-align: left !important; 
+     font-size: 25px; 
+     height: 70px; 
+     color: black; 
+     border: 2px solid black; 
+     background: #3f5e3f; 
+     box-shadow:  inset 3px 3px 6px #161616, 
+     inset -3px -3px 6px #161616 !important;   
+ } 
+  
+ #answer_screen { 
+   position: absolute; 
+   top: 67%; 
+   padding: 0; 
+   border-radius: 0; 
+   text-align: right; 
+   left: 27%; 
+   height: 28px; 
+   width: 70%; 
+   border-radius: 5px; 
+   box-shadow: none; 
+ } 
+  
+ .root { 
+     display: grid; 
+     place-content: center; 
+ } 
+  
+ #root_symbol { 
+     background: black; 
+     height: 20px; 
+     width: 20px; 
+     clip-path: polygon(0% 70%, 6% 70%, 10% 94%, 40% 30%, 100% 30%, 100% 36%, 40% 36%, 10% 100%); 
+     cursor:pointer
+ } 
+  
+ #coder { 
+     color: gray; 
+     font-family: cursive; 
+ }
+ 
+ .black{
+     Background:black 
+ }
+     </style>
+     <title>Calculator</title> 
+ </head> 
+ <body> 
+  
+     <div id="container"> 
+         <div class="grid"> 
+             <div class="screen" contenteditable="false"> 
+                 <div id="screen_text_node"></div> 
+                 <div id="answer_screen" contenteditable="false"></div> 
+             </div> 
+             <div class="button on">AC</div> 
+             <div class="button mc">MC</div> 
+             <div class="button off">OFF</div> 
+             <div class="button delete">DEL</div> 
+             <div class="button square">X<sup>2</sup></div> 
+             <div class="button root"> <div id="root_symbol"></div></div> 
+             <div class="paste buttons symb">%</div> 
+             <div class="paste buttons symb">*</div> 
+             <div class="paste buttons">7</div> 
+             <div class="paste buttons">8</div> 
+             <div class="paste buttons">9</div> 
+             <div class="paste buttons symb">-</div> 
+             <div class="paste buttons">4</div> 
+             <div class="paste buttons">5</div> 
+             <div class="paste buttons">6</div> 
+             <div class="paste buttons symb">+</div> 
+             <div class="paste buttons">1</div> 
+             <div class="paste buttons">2</div> 
+             <div class="paste buttons">3</div> 
+             <div class="paste buttons symb">/</div>   
+             <div class="paste buttons">0</div> 
+             <div class="paste buttons symb">.</div> 
+             <div class="button ans">ANS</div> 
+             <div class="button equal">=</div> 
+         </div> 
+         <div id="coder"><small> Code by </small>Alsahab</div> 
+     </div> 
+  
+ <script>
+const button_of_number = document.querySelectorAll('.paste')  
+let button_of_symbol = document.querySelectorAll('.symb')
+let text_node = document.querySelector('#screen_text_node');
+let answer_screen = document.querySelector('#answer_screen')
+let buttons = document.querySelectorAll(".button")
+let root_symbl = document.querySelector(".root")
+let square = document.querySelector(".square")
+let screen = document.querySelector(".screen")
+let show = '';
+let emtyString = " "
+
+  
+  
+  
+  
+  
+  
+ 
+button_of_number.forEach(btn => {
+ btn.addEventListener('click', (event) =>{
+   let target_btn = event.target
+   if(target_btn) {
+      show += target_btn.innerHTML;
+      text_node.innerHTML = show
+      display_answer()
+      
+    } 
+ })
+})
+ 
+ 
+  
+ button_of_symbol.forEach(synb =>{
+   synb.addEventListener("click", event => event.target)
+ })
+ 
+buttons.forEach( operator =>{
+ operator.addEventListener('click',(event)=>{
+  let target_operator = event.target;
+  
+ if(target_operator.textContent === "AC"){
+  screen.classList.remove("black")
+ }
+          
+ if(target_operator.textContent === "OFF"){
+  screen.classList.add("black")
+  text_node.innerHTML =  show = " "
+  answer_screen.textContent = " "
+ }
+   
+if(target_operator.textContent === "="){
+  try{
+     display_answer()  
+     text_node.innerHTML =  emtyString = " " 
+     //alert(text_node.textContent.includes('+'))
+ }catch{
+     answer_screen.textContent = "Syntac error"
+ }
+}
+         
+if(target_operator.textContent ==='ANS'){
+  text_node.textContent = answer_screen.textContent;
+   answer_screen.textContent = emtyString = " "
+}
+
+if(target_operator.textContent === 'DEL'){
+   delete_input()
+   display_answer()
+  
+} 
+  })
+})
+ 
+  
+root_symbl.addEventListener("click", event =>{
+let target_root = event.target;
+if(target_root){
+ answer_screen.textContent = Math.sqrt(text_node.textContent)
+}         
+})
+
+  square.addEventListener("click", event =>{
+return answer_screen.textContent = Math.pow(text_node.textContent , 2)
+})
+  
+  
+function display_answer(){
+ answer_screen.textContent = eval(text_node.textContent);
+ return answer_screen
+}
+  
+function delete_input(){
+  let input = text_node.textContent;
+ show = input.substring(0,input.length - 1)
+ text_node.textContent = show
+}
+  
+//  alert(12345679*9)
+  
+     </script> 
+ </body> 
+ </html>
