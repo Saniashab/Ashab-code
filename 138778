@@ -1,0 +1,251 @@
+<!Doctype html>
+<html>
+<head>
+   <title>My OTP Project</title>
+   <!-- Set theme color for Chrome, Firefox OS, Opera -->
+<meta name="theme-color" content="#4285f4">
+
+   <style>
+     *{
+        Padding:0px ;
+        Margin:0px ;
+        Box-sizing:border-box ;
+        Background:#ce93d8;
+        User-select:none 
+     }
+      .container {
+         Background:white ;
+         Width:86%;
+         height:fit-content;
+         Border:2px solid white ;
+         Margin:auto ;
+         Transform:translate(0%,30%);
+         Border-radius:10px 
+     }
+     h3{
+        Font-size:16px ;
+        Text-align:center ;
+        Background:white ;
+        Margin:57px 12px 9px;
+        
+     }
+    .para{
+         font-size:12px;
+         Text-align:center ;
+         Background:white ;
+         Margin-botton:12px
+     }
+    .otp-input{
+        display :flex ;
+        Justify-content:center ;hl
+        align-items:center ;
+        gap:30px;
+        Background:white ;
+        Margin:20px
+    }
+    input{
+        width:50px;
+        Height:50px ;
+        border:1px solid grey;
+        Border-radius:8px;
+        Text-align:center;
+        Font-weight:bolder;
+        Background:white ;
+        Font-size:20px ;
+        
+    }
+    
+    .sed-para{
+        width:95%;
+        Background:white;
+        Text-align:center ;
+     R   Margin-botton:13px;
+        Margin:auto ;
+        Font-size:12px;
+        Font-weight:900px 
+    }
+    a{
+       Color:black ;
+       Text-decoration: underline solid black;
+       Font-weight:bold 
+       
+    }
+   .verify-btn{
+       Margin:auto;
+       Background:white ;
+       Height:80px ;
+       Padding:7px;
+       Display:flex ;
+       Justify-content:center ;
+       Align-items:center ;
+       gap:12px
+   }
+    button{
+        width:139px ;
+        Height:33px ;
+        Font-size:15px;
+        Font-weight:400px;
+        Border-radius:8px;
+        Outline:none ;
+        Border:1px solid grey;
+        Background:white;
+        cursor:pointer
+    }
+   .verify{
+        Background:#e747bc;
+        Color:white ;
+    }
+   .a, .b{
+        Background:white 
+    }
+    
+   .border{
+        width:95%;
+        Height:30px;
+        Background:white;
+        Text-align:center ;
+        Margin-botton:13px;
+        Border-bottom:1px solid grey ;
+        Margin:auto ;
+        Font-size:14px
+   }
+ 
+.spinner{
+          Height:20px ;
+          Width:20px ;
+          Border:4px solid lightgrey ;
+          Margin:auto ;
+          Background :inherit ;
+          Border-top:4px solid blue ;
+          Border-right:4px solid blue;
+          border-radius:60%;
+          animation: spinner 0.3s linear 0.1s infinite 
+      }
+      
+      .spinner:hover{
+          Animation-name:paused
+      }
+      
+      @keyframes spinner{
+          to{
+              Transform:rotate(0deg);
+          }
+          from{
+              Transform:rotate(-360deg)
+          }
+      }
+ 
+   </style>
+</head>
+<body>
+ 
+ <div class="container">
+   <h3>Enter verification code</h3>
+    <p class="para">we've sent you a code on your <b class="a">@email.com</b></p>   
+ <div class="otp-input" id="otp-input-field">
+     <input type="text" inputMode="numeric" maxLength="1"/>
+     <input type="text" inputMode="numeric" maxLength="1"/>
+     <input type="text" inputMode="numeric" maxLength="1"/>
+     <input type="text" inputMode="numeric" maxLength="1"/>
+ </div>
+ <div class="border">
+    <p class="sed-para">Didn't get a code? 
+    <a href="#" class="b" onclick="sendCode()">Click to resent</a>
+   </p>
+ </div>
+ <div class="verify-btn">
+ <button class="cancel" onclick="cancelBtn()">Cancel</button>
+ <button class="verify" onclick="verifyBtns()">verify</button>
+ </div> 
+ 
+ <div class="loader"><span></span></div>
+    
+</div>
+
+
+ <script>
+ 
+ const inputs= document.querySelector(".otp-input");
+ const inputElem = document.querySelectorAll('input')
+ const cancelBtn = document.querySelector('.cancel')
+ const spinner = document.querySelector(".loader")
+// const loader = document.querySelector(".loader")
+
+
+
+
+
+
+ inputs.addEventListener('input',event =>{
+     let target = event.target;
+      let saveInput = Number(target.value);      
+        if(saveInput != ""){
+          let nextInputField = target.nextElementSibling;
+          if(nextInputField){
+              nextInputField.focus()
+          }
+      }
+ })
+ 
+inputs.addEventListener('keydown', event =>{
+      let target = event.target
+      if(event.key === "Backspace" && target.value === ""){
+          let prevField = target.previousElementSibling;
+          if(prevField){
+              prevField.focus()
+          }
+      }    
+})
+ 
+let str = ""
+function sendCode(strCoder) {12
+    let strCode = " "
+    let number = "123456789"
+    for(let i = 0; i <= 4 - 1; i++){
+        let code = number[Math.floor(Math.random()* 4)]
+        strCode += code    
+        
+    }
+     str = strCode
+     return alert(str)
+ }
+  
+  
+  
+  
+let interval = null  
+   
+function verifyBtns(){
+  let result = " ";
+ inputElem.forEach(input => result += input.value)
+  if(result === str) {
+       spinner.classList.add("spinner");
+        myTimeout()
+  }
+  
+else return alert("❌ INPUT VALID CODE  \n \n Try clicking on the resend link to \n collect new code")
+
+
+ }
+ 
+ 
+ 
+const locat = location
+document.write(locat)
+ alert(history.back())
+ 
+
+  cancelBtn.addEventListener("click", event =>{
+      inputElem.forEach((inputValue,index)=>{
+          inputValue.value = ''
+          inputElem[0].focus();
+
+      })
+ })
+ 
+
+
+
+ </script>
+</body>
+</html>
